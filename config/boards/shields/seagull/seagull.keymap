@@ -1,63 +1,51 @@
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/bt.h>
-    
-#define NUMPAD 0
-#define BLUETOOTH 1 
+
+#define NUMPAD      0
+#define BLUETOOTH   1
 
 / {
     keymap {
-
         compatible = "zmk,keymap";
-      
-    layer_numpad {
-        display-name = "Numpad"; 
 
-    // +---------------------------+                      
-    // |   7  |   8  |   9  |   *  |                      
-    // +------+------+------+------+
-    // |   4  |   5  |   6  |   /  |                      
-    // +------+------+------+------+-------+     
-    // |   1  |   2  |   3  |   *  | L-BT  |                     
-    // +------+------+------+------+-------+    
-    // |   0  |   .  |  +   |   =  |                          
-    // +------+------+------+------+  
-                                        
+        /* ================= NUMPAD ================= */
+        layer_numpad {
+            display-name = "Numpad";
 
-    bindings = <   
+            bindings = <
+                &kp KP_N7       &kp KP_N8        &kp KP_N9        &kp KP_MULTIPLY
+                &kp KP_N4       &kp KP_N5        &kp KP_N6        &kp KP_DIVIDE
+                &kp KP_N1       &kp KP_N2        &kp KP_N3        &kp KP_MINUS    &tog BLUETOOTH
+                &kp KP_N0       &kp KP_DOT       &kp KP_PLUS      &kp KP_EQUAL
+            >;
 
-        &kp KP_N7       &kp KP_N8        &kp KP_N9        &kp KP_MULTIPLY
-        &kp KP_N4       &kp KP_N5        &kp KP_N6        &kp KP_DIVIDE
-        &kp KP_N1       &kp KP_N2        &kp KP_N3        &kp KP_MINUS    &tog BLUETOOTH 
-        &kp KP_N0       &kp KP_DOT       &kp KP_PLUS      &kp KP_EQUAL         
-        >;
+            /* encoder (sensor) */
+            sensor-bindings = <
+                &inc_dec_kp C_VOL_UP C_VOL_DN
+            >;
+        };
 
-        sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
+        /* ================= BLUETOOTH ================= */
+        layer_bluetooth {
+            display-name = "BT";
+
+            bindings = <
+                &bt BT_CLR      &none         &none           &bootloader
+                &none           &none         &none           &none
+                &bt BT_SEL 0    &bt BT_SEL 1  &bt BT_SEL 2    &none        &tog BLUETOOTH
+                &none           &none         &none           &studio_unlock
+            >;
+
+            sensor-bindings = <
+                &inc_dec_kp C_VOL_UP C_VOL_DN
+            >;
+        };
+
+        /* ================= RESERVED (ZMK STUDIO) ================= */
+        extra_layer_2 { status = "reserved"; };
+        extra_layer_3 { status = "reserved"; };
+        extra_layer_4 { status = "reserved"; };
+        extra_layer_5 { status = "reserved"; };
     };
-
-    layer_bluetooth {     
-        display-name = "BT"; 
-  
-    // +---------------------------+                      
-    // |CLEAR |      |      |BTLDR |                      
-    // +------+------+------+------+
-    // |      |      |      |      |                      
-    // +------+------+------+------+-------+     
-    // | PF1  | PF2  |  PF3 |      | L-BT  |                      
-    // +------+------+------+------+-------+    
-    // |      |      |      |      |                          
-    // +------+------+------+------+     
-                                       
-
-    bindings = <   
-
-        &bt BT_CLR      &none         &none           &bootloader
-        &none           &none         &none           &none  
-        &bt BT_SEL 0    &bt BT_SEL 1  &bt BT_SEL 2    &none        &tog BLUETOOTH                         
-        &none           &none         &none           &none            
-        >;
-
-        sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
-    };
-};
 };
